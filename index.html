@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#08090d">
+
+    <title>FIFA Championship</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         TELA INICIAL
+    ========================== -->
+
+    <!-- =========================
+         TELA DE BOAS-VINDAS
+    ========================== -->
+
+    <main id="welcomeScreen" class="screen active">
+
+        <div class="welcome-container">
+            <div class="welcome-trophy">🏆</div>
+
+            <span class="eyebrow">FIFA • CAMPEONATO</span>
+
+            <h1>Bem Vindo,<br><span>Campeones</span></h1>
+
+            <p>Organize seus campeonatos, acompanhe os resultados e descubra quem será o grande campeão.</p>
+
+            <button id="enterButton" class="primary-btn welcome-btn">
+                Entrar <span>→</span>
+            </button>
+        </div>
+
+    </main>
+
+    <main id="setupScreen" class="screen">
+
+        <div class="setup-container">
+
+            <div class="logo-area">
+                <div class="trophy">🏆</div>
+
+                <span class="eyebrow">FIFA • CAMPEONATO</span>
+
+                <h1>
+                    Quem vai ser<br>
+                    <span>o campeão?</span>
+                </h1>
+
+                <p>
+                    Organize seu campeonato sem precisar
+                    ficar anotando tudo no WhatsApp.
+                </p>
+            </div>
+
+
+            <div class="setup-card">
+
+                <!-- NOME DO CAMPEONATO -->
+
+                <div class="field-group">
+
+                    <label for="championshipName">
+                        Nome do campeonato
+                    </label>
+
+                    <input
+                        type="text"
+                        id="championshipName"
+                        placeholder="Ex: FIFA Sexta #12"
+                        maxlength="40"
+                    >
+
+                </div>
+
+
+                <!-- QUANTIDADE DE JOGADORES -->
+
+                <div class="field-group">
+
+                    <label>
+                        Quantos jogadores?
+                    </label>
+
+                    <div class="number-selector">
+
+                        <button
+                            type="button"
+                            id="removePlayer"
+                            class="number-btn"
+                        >
+                            −
+                        </button>
+
+                        <strong id="playerCount">
+                            3
+                        </strong>
+
+                        <button
+                            type="button"
+                            id="addPlayer"
+                            class="number-btn"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NOMES -->
+
+                <div class="field-group">
+
+                    <label>
+                        Jogadores
+                    </label>
+
+                    <div id="playersInputs" class="players-inputs">
+                        <!-- JS -->
+                    </div>
+
+                </div>
+
+
+                <!-- RODADAS -->
+
+                <div class="field-group">
+
+                    <label for="roundsCount">
+                        Quantidade de rodadas
+                    </label>
+
+                    <input
+                        type="number"
+                        id="roundsCount"
+                        value="5"
+                        min="1"
+                        max="100"
+                    >
+
+                    <small>
+                        Você pode colocar 5, 10, 15, 20...
+                    </small>
+
+                </div>
+
+
+                <button
+                    id="startChampionship"
+                    class="primary-btn"
+                >
+                    Começar campeonato
+                    <span>→</span>
+                </button>
+
+            </div>
+
+
+            <!-- HISTÓRICO -->
+
+            <button
+                id="historyButton"
+                class="history-link"
+            >
+                📚 Ver histórico de campeonatos
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         APP
+    ========================== -->
+
+    <main id="appScreen" class="screen">
+
+        <header class="app-header">
+
+            <div>
+
+                <span class="header-label">
+                    CAMPEONATO
+                </span>
+
+                <h2 id="headerChampionshipName">
+                    FIFA Sexta
+                </h2>
+
+            </div>
+
+            <button
+                id="resetChampionship"
+                class="icon-btn"
+                title="Novo campeonato"
+            >
+                ↻
+            </button>
+
+        </header>
+
+
+        <!-- CONTEÚDO -->
+
+        <section class="content">
+
+            <!-- RODADAS -->
+
+            <div
+                id="roundsView"
+                class="view active-view"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            PARTIDAS
+                        </span>
+
+                        <h1>Rodadas</h1>
+
+                    </div>
+
+                    <div
+                        id="roundProgress"
+                        class="progress-badge"
+                    >
+                        0/5
+                    </div>
+
+                </div>
+
+
+                <div id="roundsContainer">
+                    <!-- JS -->
+                </div>
+
+            </div>
+
+
+            <!-- CLASSIFICAÇÃO -->
+
+            <div
+                id="standingsView"
+                class="view"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            TABELA
+                        </span>
+
+                        <h1>Classificação</h1>
+
+                    </div>
+
+                </div>
+
+
+                <div class="leader-card">
+
+                    <div class="leader-icon">
+                        🏆
+                    </div>
+
+                    <div>
+
+                        <span>
+                            LÍDER ATUAL
+                        </span>
+
+                        <strong id="currentLeader">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>#</th>
+                                <th>Jogador</th>
+                                <th>J</th>
+                                <th>V</th>
+                                <th>E</th>
+                                <th>D</th>
+                                <th>SG</th>
+                                <th>PTS</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="standingsBody">
+                            <!-- JS -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVEGAÇÃO -->
+
+        <nav class="bottom-nav">
+
+            <button
+                class="nav-btn active"
+                data-view="roundsView"
+            >
+                <span>⚽</span>
+                <small>Rodadas</small>
+            </button>
+
+            <button
+                class="nav-btn"
+                data-view="standingsView"
+            >
+                <span>🏆</span>
+                <small>Classificação</small>
+            </button>
+
+        </nav>
+
+    </main>
+
+
+    <!-- =========================
+         HISTÓRICO
+    ========================== -->
+
+    <main id="historyScreen" class="screen">
+
+        <header class="history-header">
+
+            <button
+                id="backToSetup"
+                class="back-btn"
+            >
+                ←
+            </button>
+
+            <div>
+
+                <span>
+                    SEUS CAMPEONATOS
+                </span>
+
+                <h1>Histórico</h1>
+
+            </div>
+
+        </header>
+
+
+        <section class="history-content">
+
+            <div id="historyContainer">
+                <!-- JS -->
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         MODAL CAMPEÃO
+    ========================== -->
+
+    <div
+        id="championModal"
+        class="modal-overlay"
+    >
+
+        <div class="champion-modal">
+
+            <button
+                id="closeModal"
+                class="close-modal"
+            >
+                ×
+            </button>
+
+            <div class="confetti">
+                🎉
+            </div>
+
+            <span class="modal-label">
+                CAMPEONATO ENCERRADO
+            </span>
+
+            <h2>
+                Parabéns!
+            </h2>
+
+            <div
+                id="championName"
+                class="champion-name"
+            >
+                -
+            </div>
+
+            <p>
+                é o grande campeão do
+            </p>
+
+            <strong
+                id="championshipFinishedName"
+            >
+                -
+            </strong>
+
+
+            <div class="podium-summary">
+
+                <div>
+
+                    <span>🏆 Campeão</span>
+
+                    <strong id="modalChampion">
+                        -
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>🔻 Lanterninha</span>
+
+                    <strong id="modalLast">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="whatsappButton"
+                class="whatsapp-btn"
+            >
+                <span>💬</span>
+                Enviar resultado para o grupo
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
