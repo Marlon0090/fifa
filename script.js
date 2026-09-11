@@ -2178,38 +2178,72 @@ function loadCurrentChampionship() {
 
 function sendWhatsAppResult() {
 
-    const standings = calculateStandings();
+    const standings =
+        calculateStandings();
 
-    if (!standings || standings.length === 0) {
+
+    if (
+        standings.length === 0
+    ) {
+
         return;
+
     }
+
+
+    /* =========================================
+       CAMPEÃO
+    ========================================= */
 
     const champion =
         championship.champion ||
         standings[0].name;
 
+
     const championStats =
         standings.find(
-            player => player.name === champion
+            player =>
+                player.name === champion
         ) || standings[0];
 
 
-    const jogos = championStats.games;
+    /* =========================================
+       ESTATÍSTICAS DO CAMPEÃO
+    ========================================= */
 
-    const vitorias = championStats.wins;
+    const jogos =
+        championStats.games;
 
-    const empates = championStats.draws;
+    const vitorias =
+        championStats.wins;
 
-    const derrotas = championStats.losses;
+    const empates =
+        championStats.draws;
 
-    const golsMarcados = championStats.goalsFor;
+    const derrotas =
+        championStats.losses;
 
+    const golsMarcados =
+        championStats.goalsFor;
+
+
+    /* =========================================
+       MÉDIA DE GOLS POR JOGO
+    ========================================= */
 
     const mediaGols =
         jogos > 0
             ? (golsMarcados / jogos).toFixed(2)
             : "0.00";
 
+
+    /* =========================================
+       APROVEITAMENTO
+       
+       Vitória = 3 pontos
+       Empate = 1 ponto
+       Máximo possível = jogos × 3
+    ========================================= */
 
     const aproveitamento =
         jogos > 0
@@ -2220,25 +2254,30 @@ function sendWhatsAppResult() {
             : "0.0";
 
 
+    /* =========================================
+       MONTAR MENSAGEM
+    ========================================= */
+
     const message =
-`FIFA CHAMPIONSHIP
+
+`🏆 FIFA CHAMPIONSHIP
 
 Campeonato: ${championship.name}
 
-CAMPEÃO
+🥇 CAMPEÃO
 ${champion}
 
-ESTATÍSTICAS DO CAMPEÃO
+📊 ESTATÍSTICAS DO CAMPEÃO
 
-Jogos: ${jogos}
-Vitórias: ${vitorias}
-Empates: ${empates}
-Derrotas: ${derrotas}
-Gols marcados: ${golsMarcados}
-Média de gols por jogo: ${mediaGols}
-Aproveitamento: ${aproveitamento}%
+🎮 Jogos: ${jogos}
+✅ Vitórias: ${vitorias}
+🤝 Empates: ${empates}
+❌ Derrotas: ${derrotas}
+⚽ Gols marcados: ${golsMarcados}
+📈 Média de gols/jogo: ${mediaGols}
+🎯 Aproveitamento: ${aproveitamento}%
 
-CLASSIFICAÇÃO
+📊 CLASSIFICAÇÃO
 
 ${standings
     .map(
@@ -2247,14 +2286,26 @@ ${standings
     )
     .join("\n")}
 
-FIFA Championship`;
+⚽ FIFA Championship`;
 
+
+    /* =========================================
+       CODIFICAR MENSAGEM
+    ========================================= */
 
     const encoded =
-        encodeURIComponent(message);
+        encodeURIComponent(
+            message
+        );
 
 
-    if (WHATSAPP_GROUP_LINK) {
+    /* =========================================
+       WHATSAPP
+    ========================================= */
+
+    if (
+        WHATSAPP_GROUP_LINK
+    ) {
 
         window.open(
             WHATSAPP_GROUP_LINK,
@@ -2262,11 +2313,12 @@ FIFA Championship`;
         );
 
         return;
+
     }
 
 
     window.open(
-        "https://wa.me/?text=" + encoded,
+        `https://wa.me/?text=${encoded}`,
         "_blank"
     );
 
